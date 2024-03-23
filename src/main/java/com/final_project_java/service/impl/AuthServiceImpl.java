@@ -32,8 +32,7 @@ public class AuthServiceImpl implements AuthService {
         Optional<Customer> customerOptional = customerRepository.getCustomerByEmail(loginDto.getEmail());
         customerOptional.orElseThrow(() ->
                 new ResourceNotFoundException("The email is not registered"));
-        // Verificam daca parolele se potrivesc
-        // Metoda checkpw verifica daca parola primita este egala cu parola din baza de date
+
         boolean isMatch = BCrypt.checkpw(loginDto.getPassword(), customerOptional.get().getPassword());
         if (isMatch == false) {
             throw new BadRequestException("Credential not match");
